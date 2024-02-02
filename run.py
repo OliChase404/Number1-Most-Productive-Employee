@@ -5,6 +5,9 @@ from mimesis import Generic, Code
 from faker import Faker
 from rich import print
 from rich.console import Console
+import os
+
+os.environ["PYTHONIOENCODING"] = "utf-8"
 
 
 faker = Faker()
@@ -37,6 +40,40 @@ def push(commit_msg):
 def generate_code(num_lines=5):
     code = Code()
     return code.python_code(num_lines)
+
+def generate_random_unicode_character():
+    valid_code_points = [code_point for code_point in range(0x0020, 0xD7FF + 1) if code_point < 0xD800 or code_point > 0xDFFF]
+    char = random.choice(valid_code_points)
+    return chr(char)
+
+def generate_random_unicode_word(length):
+    word = ''
+    for _ in range(length):
+        word += generate_random_unicode_character()
+    return word
+
+def generate_random_ascii_character(include_space=False):
+    if include_space:
+        return chr(random.randint(32, 126))
+    else:
+        return chr(random.randint(33, 126))
+    
+def generate_random_ascii_word(length):
+    word = ''
+    for _ in range(length):
+        word += generate_random_ascii_character()
+    return word
+
+def generate_random_sentence(length):
+    sentence = ''
+    for _ in range(length):
+        flip = flip_coin()
+        if flip:
+            sentence += generate_random_unicode_word(random.randint(1, 12)) + ' '
+        else:
+            sentence += generate_random_ascii_word(random.randint(1, 12)) + ' '
+    return sentence
+
     
 def take_break():
     console.print("""[hot_pink]I'm taking a break.""")
@@ -75,18 +112,42 @@ def update_readme():
     console.print("""[hot_pink]Better update the ReadMe.""")
     roll = random.randint(1, 2000)
     if roll == 666:
-        console.print("""[hot_pink]Actually, that read me sucks. I'm going to start over.""")
+        console.print("""[hot_pink]Actually, that ReadMe sucks. I'm going to start over.""")
         subprocess.run('rm ./README.md', shell=True)
         subprocess.run('touch ./README.md', shell=True)
     with open('./README.md', 'a') as f:
         f.write('\n' + faker.sentence())
     push("Updated the ReadMe")
+    
 
-
-
+def text_with_team():
+    console.print("""[hot_pink]I should probably check in with the team.""")
+    if flip_coin():
+        console.print("""[hot_pink]I'll send them a message.""")
+        msg = 'Dev: \n'
+        msg_length = random.randint(5, 30)
+        msg += generate_random_sentence(msg_length)
+        with open('team_chat.txt', 'a') as f:
+            f.write(msg + '\n')
+    else:
+        console.print("""[hot_pink]Oh I have a new message""")
+        msg = 'Team: \n'
+        msg_length = random.randint(5, 30)
+        msg += generate_random_sentence(msg_length)
+        with open('team_chat.txt', 'a') as f:
+            f.write(msg + '\n')
+    push('Team chat')
+    
+def work_on_novel():
+    console.print("""[hot_pink]I think I'll work on my novel.""")
+    roll = random.randint(1, 140)
+    with open('novel.txt', 'a') as f:
+        f.write(generate_random_ascii_character(True))
+        if roll == 100:
+            f.write('\n')
+        
 def work():
-    time.sleep(random.randint(60, 300))
-    roll = random.randint(1, 50)
+    roll = random.randint(1, 100)
     if roll <= 10:
         take_break()
     elif roll in range(11, 25):
@@ -95,6 +156,11 @@ def work():
         update_readme()
     elif roll in range(31, 45):
         delete_feature()
+    elif roll in range(46, 60):
+        text_with_team()
+    elif roll in range(61, 100):
+        work_on_novel()
+    time.sleep(random.randint(300, 18000))
     work()
     
     
@@ -103,4 +169,6 @@ def work():
 # update_readme()
 # take_break()
 # delete_feature()
+# text_with_team()
+# work_on_novel()
 work()
