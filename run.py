@@ -4,6 +4,7 @@ import time
 from mimesis import Generic, Code
 from faker import Faker
 
+
 faker = Faker()
 
 features = []
