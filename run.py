@@ -21,7 +21,12 @@ def update_feature_list():
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode == 0:
         features = result.stdout.splitlines()
-        print(features)
+        # print(features)
+        
+def push(commit_msg):
+        subprocess.run(['git', 'add', '.'])
+        subprocess.run(['git', 'commit', '-am', commit_msg])
+        subprocess.run(['git', 'push'])
     
     
 def generate_code(num_lines=5):
@@ -30,20 +35,29 @@ def generate_code(num_lines=5):
     
 def take_break():
     print("I'm taking a break!")
-    time.sleep(random.randint(5, 30))
     
 def new_feature():
     print("I'm adding a new feature!")
     name = 'feature' + str(random.randint(0, 1000000)) + '.py'
+    i = 0
+    while name in features and i < 10000:
+        name = 'feature' + str(random.randint(0, 1000000)) + '.py'
+        i += 1 
     command = 'touch ./Super_Awesome_App/' + name
     try:
         subprocess.run(command, shell=True)
-        subprocess.run(['git', 'add', '.'])
-        subprocess.run(['git', 'commit', '-am', 'Add new feature'])
-        subprocess.run(['git', 'push'])
+        push('Added ' + name)
     except:
         print("Oh, that didn't work...")
-    time.sleep(random.randint(5, 30))
+        
+def delete_feature():
+    print('What was I thinking?!')
+    update_feature_list()
+    feature = random.choice(features)
+    command = 'rm ./Super_Awesome_App/' + feature
+    print('I deleted ' + feature + 'it was dumb')
+    
+
     
 def update_readme():
     print("Better update the README!")
