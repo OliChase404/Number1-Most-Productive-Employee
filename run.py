@@ -16,6 +16,7 @@ def flip_coin():
         return False
 
 def update_feature_list():
+    global features
     path = './Super_Awesome_App'
     command = ['ls', path]
     result = subprocess.run(command, capture_output=True, text=True)
@@ -52,20 +53,24 @@ def new_feature():
         print("Oh, that didn't work...")
         
 def delete_feature():
-    print('What was I thinking?!')
     update_feature_list()
+    print('What was I thinking?!')
     feature = random.choice(features)
-    command = 'rm ./Super_Awesome_App/' + feature
-    print('I deleted ' + feature + 'it was dumb')
+    command = f'rm ./Super_Awesome_App/{feature}'
+    try:
+        subprocess.run(command, shell=True, check=True)
+        update_feature_list()
+        print(f'I deleted {feature}, it was dumb')
+        push(f'Deleted {feature}')
+    except subprocess.CalledProcessError as e:
+        print("Oh, that didn't work...")
     
 
     
 def update_readme():
     print("Better update the README!")
-    flip = flip_coin()
-    if flip:
-        with open('./README.md', 'a') as f:
-            f.write('\n\n' + faker.sentence())
+    with open('./README.md', 'a') as f:
+        f.write('\n' + faker.sentence())
     push("Updated the ReadMe")
 
 
@@ -76,4 +81,5 @@ def work():
     
 # update_feature_list()
 # new_feature()
-update_readme()
+# update_readme()
+delete_feature()
