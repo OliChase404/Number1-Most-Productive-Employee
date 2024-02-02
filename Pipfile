@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 generic = "*"
+faker = "*"
 
 [dev-packages]
 
