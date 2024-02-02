@@ -65,7 +65,7 @@ def delete_feature():
         command = f'rm ./Super_Awesome_App/{feature}'
         subprocess.run(command, shell=True, check=True)
         update_feature_list()
-        console.print("""[hot_pink] I deleted {{feature}}, it was dumb""")
+        console.print(f"""[hot_pink] I deleted {feature}, it was dumb""")
         push(f'Deleted {feature}')
     except subprocess.CalledProcessError as e:
         console.print("""[hot_pink]"Oh, that didn't work...""")
