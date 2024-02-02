@@ -73,7 +73,7 @@ def delete_feature():
 
     
 def update_readme():
-    console.print("""[hot_pink]Better update the README!""")
+    console.print("""[hot_pink]Better update the ReadMe.""")
     with open('./README.md', 'a') as f:
         f.write('\n' + faker.sentence())
     push("Updated the ReadMe")
