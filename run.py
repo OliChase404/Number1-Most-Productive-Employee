@@ -47,6 +47,7 @@ def new_feature():
     try:
         subprocess.run(command, shell=True)
         push('Added ' + name)
+        update_feature_list()
     except:
         print("Oh, that didn't work...")
         
@@ -65,10 +66,7 @@ def update_readme():
     if flip:
         with open('./README.md', 'a') as f:
             f.write('\n\n' + faker.sentence())
-    
-    subprocess.run(['git', 'add', '.'])
-    subprocess.run(['git', 'commit', '-am', 'Update README'])
-    subprocess.run(['git', 'push'])
+    push("Updated the ReadMe")
 
 
 
@@ -77,4 +75,5 @@ def work():
     
     
 # update_feature_list()
-new_feature()
+# new_feature()
+update_readme()
