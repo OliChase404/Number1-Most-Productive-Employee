@@ -3,9 +3,13 @@ import random
 import time
 from mimesis import Generic, Code
 from faker import Faker
+from rich import print
+from rich.console import Console
 
 
 faker = Faker()
+
+console = Console()
 
 features = []
 
@@ -36,10 +40,10 @@ def generate_code(num_lines=5):
     return code.python_code(num_lines)
     
 def take_break():
-    print("I'm taking a break.")
+    console.print("""[hot_pink]I'm taking a break.""")
     
 def new_feature():
-    print("I'm adding a new feature!")
+    console.print("""[hot_pink]I'm adding a new feature!""")
     name = 'feature' + str(random.randint(0, 1000000)) + '.py'
     i = 0
     while name in features and i < 10000:
@@ -51,7 +55,7 @@ def new_feature():
         push('Added ' + name)
         update_feature_list()
     except:
-        print("Oh, that didn't work...")
+        console.print("""[hot_pink]Oh, that didn't work...""")
         
 def delete_feature():
     update_feature_list()
@@ -61,15 +65,15 @@ def delete_feature():
         command = f'rm ./Super_Awesome_App/{feature}'
         subprocess.run(command, shell=True, check=True)
         update_feature_list()
-        print(f'I deleted {feature}, it was dumb')
+        console.print("""[hot_pink] I deleted {feature}, it was dumb""")
         push(f'Deleted {feature}')
     except subprocess.CalledProcessError as e:
-        print("Oh, that didn't work...")
+        console.print("""[hot_pink]"Oh, that didn't work...""")
     
 
     
 def update_readme():
-    print("Better update the README!")
+    console.print("""[hot_pink]Better update the README!""")
     with open('./README.md', 'a') as f:
         f.write('\n' + faker.sentence())
     push("Updated the ReadMe")
@@ -77,7 +81,7 @@ def update_readme():
 
 
 def work():
-    time.sleep(random.randint(5, 30))
+    time.sleep(random.randint(60, 300))
     roll = random.randint(1, 100)
     if roll <= 10:
         take_break()
@@ -94,5 +98,5 @@ def work():
 # new_feature()
 # update_readme()
 # take_break()
-# delete_feature()
-work()
+delete_feature()
+# work()
