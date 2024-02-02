@@ -27,7 +27,6 @@ def update_feature_list():
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode == 0:
         features = result.stdout.splitlines()
-        # print(features)
         
 def push(commit_msg):
         subprocess.run(['git', 'add', '.'])
@@ -82,7 +81,7 @@ def update_readme():
 
 def work():
     time.sleep(random.randint(60, 300))
-    roll = random.randint(1, 100)
+    roll = random.randint(1, 50)
     if roll <= 10:
         take_break()
     elif roll in range(11, 25):
@@ -95,8 +94,8 @@ def work():
     
     
 # update_feature_list()
-new_feature()
+# new_feature()
 # update_readme()
 # take_break()
 # delete_feature()
-# work()
+work()
