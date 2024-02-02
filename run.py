@@ -35,7 +35,7 @@ def generate_code(num_lines=5):
     return code.python_code(num_lines)
     
 def take_break():
-    print("I'm taking a break!")
+    print("I'm taking a break.")
     
 def new_feature():
     print("I'm adding a new feature!")
@@ -55,9 +55,9 @@ def new_feature():
 def delete_feature():
     update_feature_list()
     print('What was I thinking?!')
-    feature = random.choice(features)
-    command = f'rm ./Super_Awesome_App/{feature}'
     try:
+        feature = random.choice(features)
+        command = f'rm ./Super_Awesome_App/{feature}'
         subprocess.run(command, shell=True, check=True)
         update_feature_list()
         print(f'I deleted {feature}, it was dumb')
@@ -77,9 +77,21 @@ def update_readme():
 
 def work():
     time.sleep(random.randint(5, 30))
+    roll = random.randint(1, 100)
+    if roll <= 10:
+        take_break()
+    elif roll in range(11, 25):
+        new_feature()
+    elif roll in range(26, 30):
+        update_readme()
+    elif roll in range(31, 45):
+        delete_feature()
+    work()
     
     
 # update_feature_list()
 # new_feature()
 # update_readme()
-delete_feature()
+# take_break()
+# delete_feature()
+work()
