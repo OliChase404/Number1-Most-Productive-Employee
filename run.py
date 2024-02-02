@@ -74,7 +74,7 @@ def delete_feature():
 def update_readme():
     console.print("""[hot_pink]Better update the ReadMe.""")
     roll = random.randint(1, 2000)
-    if True:
+    if roll == 666:
         console.print("""[hot_pink]Actually, that read me sucks. I'm going to start over.""")
         subprocess.run('rm ./README.md', shell=True)
         subprocess.run('touch ./README.md', shell=True)
@@ -100,7 +100,7 @@ def work():
     
 # update_feature_list()
 # new_feature()
-update_readme()
+# update_readme()
 # take_break()
 # delete_feature()
-# work()
+work()
