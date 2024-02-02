@@ -95,8 +95,8 @@ def work():
     
     
 # update_feature_list()
-# new_feature()
-update_readme()
+new_feature()
+# update_readme()
 # take_break()
 # delete_feature()
 # work()
