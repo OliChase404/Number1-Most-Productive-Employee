@@ -32,6 +32,7 @@ def update_feature_list():
         features = result.stdout.splitlines()
         
 def push(commit_msg):
+        subprocess.run(['git', 'pull'])
         subprocess.run(['git', 'add', '.'])
         subprocess.run(['git', 'commit', '-am', commit_msg])
         subprocess.run(['git', 'push'])
